@@ -1,10 +1,13 @@
+from grid.bloc import Bloc
+
+
 class Matrix:
     def __init__(self, rows, cols):
         self.__cols: int = cols
         self.__rows: int = rows
-        self.__blocs = [[x for x in range(self.__cols)] for y in range(self.__rows)]
+        self.__blocs = [list([Bloc() for x in range(self.__cols)]) for y in range(self.__rows)]
 
-    def set_bloc_at_position(self, x: int, y: int, value):
+    def set_bloc_at_position(self, x: int, y: int, value: Bloc):
         if (0 <= y < self.__cols) and (0 <= x < self.__rows):
             self.__blocs[x][y] = value
 
@@ -14,8 +17,7 @@ class Matrix:
 
     def delete_bloc_at_position(self, x, y):
         if (0 <= y < self.__cols) and (0 <= x < self.__rows):
-            # TODO: We shouldn't delete but replace with an empty bloc
-            del self.__blocs[x][y]
+            self.__blocs[x][y] = Bloc()
 
     def get_row_at_position(self, y):
         if 0 <= y < self.__rows:
@@ -28,17 +30,17 @@ class Matrix:
                 ret.append(bloc[x])
             return ret
 
-    def set_row_at_position(self, row, value):
+    def fill_row_at_position(self, row, value: Bloc):
         if 0 <= row < self.__rows:
             for x in range(len(self.__blocs[row])):
                 self.__blocs[row][x] = value
 
-    def set_col_at_position(self, col, value):
+    def fill_col_at_position(self, col, value: Bloc):
         if 0 <= col < self.__cols:
             for bloc in self.__blocs:
                 bloc[col] = value
 
-    def insert_row_at_position(self, row, value):
+    def insert_row_at_position(self, row, value: Bloc):
         if 0 <= row < self.__rows:
             new_row = []
             for i in range(self.__cols):
@@ -46,7 +48,7 @@ class Matrix:
             self.__blocs.insert(row, new_row)
             self.__rows += 1
 
-    def insert_col_at_position(self, col, value):
+    def insert_col_at_position(self, col, value: Bloc):
         if 0 <= col < self.__cols:
             for row in self.__blocs:
                 row.insert(col, value)
@@ -63,7 +65,7 @@ class Matrix:
                 del r[col]
             self.__cols -= 1
 
-    def fill_with_value(self, value):
+    def fill_with_value(self, value: Bloc):
         for row in range(len(self.__blocs)):
             for col in range(len(self.__blocs[row])):
                 self.__blocs[row][col] = value
@@ -75,4 +77,5 @@ class Matrix:
         return self.__cols
 
     def print(self):
-        print(self.__blocs)
+        for row in self.__blocs:
+            print(row)
