@@ -1,10 +1,10 @@
 class Matrix:
     def __init__(self, rows, cols):
-        self.__cols = cols
-        self.__rows = rows
+        self.__cols: int = cols
+        self.__rows: int = rows
         self.__blocs = [[x for x in range(self.__cols)] for y in range(self.__rows)]
 
-    def set_bloc_at_position(self, x, y, value):
+    def set_bloc_at_position(self, x: int, y: int, value):
         if (0 <= y < self.__cols) and (0 <= x < self.__rows):
             self.__blocs[x][y] = value
 
